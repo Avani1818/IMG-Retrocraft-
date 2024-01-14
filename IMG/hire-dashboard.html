@@ -1,0 +1,210 @@
+<html>
+<head>
+        <title>Producer Dashboard</title>
+    <style>
+      .notification-container {
+ display: inline-block;
+ position: relative;
+}
+.notification-container {
+ position: fixed;
+ top: 10px;
+ right: 10px;
+}
+
+.notification-text {
+ font-weight: bold;
+ font-size: 12px;
+ color: rgb(255, 157, 71);
+}
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: url('https://cdn4.vectorstock.com/i/1000x1000/57/73/80s-retro-design-futurism-sci-fi-background-vector-27135773.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #000000;
+        }
+
+        .dashboard-container {
+            background-color: rgba(255, 255, 190, 0.957);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-top: 0px;
+            font-size: 35px;
+            padding: 0px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: #04010f;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+  <div class="notification-container">
+            <a href="producer-notifications.html">
+    <span class="notification-text">Notifications</span>
+    </a>
+    <span class="notification-icon">🔔</span>
+   </div>
+    <div class="dashboard-container">
+        <h1>Hiring/Producer Dashboard</h1>
+        <label for="jobTitle">Select Job Title:</label>
+        <select id="jobTitle" onchange="filterFreelancers()">
+            <option value="web developer">Web Developer</option>
+            <option value="ui/ux designer">UI/UX designer</option>
+            <option value="graphic designer">Graphic designer</option>
+        </select>
+        <label for="payGrade">Select Pay Grade:</label>
+        <select id="payGrade" onchange="filterFreelancers()">
+            <option value="high">High</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+        </select>
+        <h2>Available Freelancers</h2>
+        <ul id="freelancerList"></ul>
+        <script>
+            const freelancers = [
+                { name: "Kalpana Badami", jobTitle: "web developer", payGrade: "high" },
+                { name: "Manish Shenoy", jobTitle: "ui/ux designer", payGrade: "low" },
+                { name: "Indira Ben", jobTitle: "graphic designer", payGrade: "high" },
+                { name: "Naina Dayal", jobTitle: "web developer", payGrade: "high" },
+                { name: "Chitra Chana", jobTitle: "ui/ux designer", payGrade: "medium" },
+                { name: "Narmada Pillay", jobTitle: "ui/ux designer", payGrade: "high" },
+                { name: "Anshula Varma", jobTitle: "web developer", payGrade: "low" },
+                { name: "Jyoti Barman", jobTitle: "graphic designer", payGrade: "low" },
+                { name: "Mona Mannan", jobTitle: "ui/ux designer", payGrade: "medium" },
+                { name: "Roma Grover", jobTitle: "graphic designer", payGrade: "high" },
+            ];
+
+            function filterFreelancers() {
+                const selectedJobTitle = document.getElementById("jobTitle").value;
+                const selectedPayGrade = document.getElementById("payGrade").value;
+                const filteredFreelancers = freelancers.filter(freelancer => (
+                    freelancer.jobTitle === selectedJobTitle || selectedJobTitle === 'all'
+                ) && (
+                    freelancer.payGrade === selectedPayGrade || selectedPayGrade === 'all'
+                ));
+                                displayFreelancers(filteredFreelancers);
+            }
+
+            function displayFreelancers(freelancers) {
+                const freelancerList = document.getElementById("freelancerList");
+                freelancerList.innerHTML = "";
+                freelancers.slice(0, 10).forEach(freelancer => {
+                    const listItem = document.createElement("li");
+
+if (freelancer.name === "Kalpana Badami") {
+                    const link = document.createElement("a");
+                    link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                    link.href = `freelancer-profile.html?name=${encodeURIComponent(freelancer.name)}`;
+                    link.onclick = () => window.location.href = link.href;
+                    listItem.appendChild(link);
+} else if (freelancer.name === "Manish Shenoy") {
+                        const link = document.createElement("a");
+                        link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                        link.href = `freelancer-profile1.html?name=${encodeURIComponent(freelancer.name)}`;
+                        link.onclick = () => window.location.href = link.href;
+                        listItem.appendChild(link);
+                    } else if (freelancer.name === "Indira Ben") {
+                        const link = document.createElement("a");
+                        link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                        link.href = `freelancer-profile2.html?name=${encodeURIComponent(freelancer.name)}`;
+                        link.onclick = () => window.location.href = link.href;
+                        listItem.appendChild(link);
+                    } else if (freelancer.name === "Naina Dayal") {
+                        const link = document.createElement("a");
+                        link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                        link.href = `freelancer-profile3.html?name=${encodeURIComponent(freelancer.name)}`;
+                        link.onclick = () => window.location.href = link.href;
+                        listItem.appendChild(link);
+                    } else if (freelancer.name === "Chitra Chana") {
+                        const link = document.createElement("a");
+                        link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                        link.href = `freelancer-profile4.html?name=${encodeURIComponent(freelancer.name)}`;
+                        link.onclick = () => window.location.href = link.href;
+                        listItem.appendChild(link);
+                    }else if (freelancer.name === "Narmada Pillay") {
+                        const link = document.createElement("a");
+                        link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                        link.href = `freelancer-profile5.html?name=${encodeURIComponent(freelancer.name)}`;
+                        link.onclick = () => window.location.href = link.href;
+                        listItem.appendChild(link);
+                    } else if (freelancer.name === "Anshula Varma") {
+                        const link = document.createElement("a");
+                        link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                        link.href = `freelancer-profile6.html?name=${encodeURIComponent(freelancer.name)}`;
+                        link.onclick = () => window.location.href = link.href;
+                        listItem.appendChild(link);
+                    }else if (freelancer.name === "Jyoti Barman") {
+                        const link = document.createElement("a");
+                        link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                        link.href = `freelancer-profile7.html?name=${encodeURIComponent(freelancer.name)}`;
+                        link.onclick = () => window.location.href = link.href;
+                        listItem.appendChild(link);
+                    } else if (freelancer.name === "Mona Mannan") {
+                        const link = document.createElement("a");
+                        link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                        link.href = `freelancer-profile8.html?name=${encodeURIComponent(freelancer.name)}`;
+                        link.onclick = () => window.location.href = link.href;
+                        listItem.appendChild(link);
+                    } else if (freelancer.name === "Roma Grover") {
+                        const link = document.createElement("a");
+                        link.textContent = `${freelancer.name} - Pay Grade: ${freelancer.payGrade}`;
+                        link.href = `freelancer-profile9.html?name=${encodeURIComponent(freelancer.name)}`;
+                        link.onclick = () => window.location.href = link.href;
+                        listItem.appendChild(link);
+                    }
+
+                    freelancerList.appendChild(listItem);
+                });
+            }
+
+            // Initial loading or back navigation
+            document.addEventListener('DOMContentLoaded', function () {
+                // Retrieve filter settings and filtered freelancers from localStorage
+                const selectedJobTitle = localStorage.getItem('selectedJobTitle') || 'web developer';
+                const selectedPayGrade = localStorage.getItem('selectedPayGrade') || 'high';
+                const storedFreelancers = localStorage.getItem('filteredFreelancers');
+                
+                // Set filter settings in the dropdowns
+                document.getElementById('jobTitle').value = selectedJobTitle;
+                document.getElementById('payGrade').value = selectedPayGrade;
+
+                // Display freelancers based on stored data or default values
+                filterFreelancers();
+            });
+
+            
+        </script>
+    </div>
+</body>
+</html>
+

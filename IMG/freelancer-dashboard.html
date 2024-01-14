@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+    <title>My Freelancer Dashboard</title>
+    <style>
+        .notification-container {
+            display: inline-block;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+
+        .notification-button {
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .notification-button:hover {
+            background-color: rgb(161, 179, 0);
+        }
+
+        .notification-icon {
+            font-size: 15px;
+            margin-left: 5px;
+        }
+
+        .notification-text {
+            font-weight: bold;
+            font-size: 15px;
+            color: rgb(248, 247, 246);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #dff0d8;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            text-align: center;
+        }
+
+        .dashboard-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 80%;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .job-section {
+            background-color: #dff0d8;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .job-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 15px;
+        }
+
+        .job-card {
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            flex: 1 1 300px;
+            text-align: left;
+        }
+
+        .job-card img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .filter-section {
+            background-color: #d9edf7;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="notification-container">
+        <button class="notification-button" onclick="window.location.href='freelancer-notifications.html'">
+            <span class="notification-text">Notifications</span>
+            <span class="notification-icon">🔔</span>
+        </button>
+    </div>
+
+    <div class="dashboard-container">
+        <h1>Freelancer Dashboard</h1>
+
+        <div class="job-section">
+            <h2>My Ongoing Jobs</h2>
+            <div class="job-list" id="ongoing-job-list"></div>
+        </div>
+
+        <div class="job-section">
+            <h2>My Available Jobs</h2>
+            <div class="job-list" id="available-job-list"></div>
+        </div>
+
+        <div class="filter-section">
+            <h3>Filters for Available Jobs</h3>
+            <label for="jobProfile">Pick Your Job Type:</label>
+            <select id="jobProfile" onchange="filterJobs()">
+                <option value="all">All Jobs</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Graphic Design">Graphic Design</option>
+                <option value="Frontend Developer">Frontend Developer</option>
+                <option value="Backend Developer">Backend Developer</option>
+                <option value="UI/UX Designer">UI/UX Designer</option>
+                <option value="Logo Design">Logo Design</option>
+            </select>
+
+            <label for="paygrade">Choose Your Pay Grade:</label>
+            <select id="paygrade" onchange="filterJobs()">
+                <option value="all">All Pay Grades</option>
+                <option value="Low">Low Pay</option>
+                <option value="Medium">Medium Pay</option>
+                <option value="High">High Pay</option>
+            </select>
+
+            <label for="estimatedTime">Estimate Your Time Commitment:</label>
+            <select id="estimatedTime" onchange="filterJobs()">
+                <option value="all">All Times</option>
+                <option value="Short">Short Time</option>
+                <option value="Medium">Medium Time</option>
+                <option value="Long">Long Time</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+
+        const ongoingJobsData = [
+            { title: 'Web Development Project', description: 'Building a new website', pay: 'High', estimatedTime: 'Medium', image: 'https://i.pinimg.com/564x/82/53/f4/8253f46af6e9eaa5699b8bf1387653e9.jpg' },
+            { title: 'Graphic Design Task', description: 'Creating promotional materials', pay: 'Medium', estimatedTime: 'Short', image: 'https://i.pinimg.com/564x/d0/66/57/d06657234384f0dc087a2a3d98a2451d.jpg' },
+        ];
+
+        const availableJobsData = [
+            { title: 'Frontend Developer', description: 'Developing user interfaces for websites', pay: 'High', estimatedTime: 'Medium', image: 'https://i.pinimg.com/564x/69/77/6a/69776a80694f3cebd3283659dbcfdcda.jpg' },
+            { title: 'Backend Developer', description: 'Building server-side logic for web applications', pay: 'High', estimatedTime: 'Long', image: 'https://i.pinimg.com/564x/6d/53/59/6d53595856a178a9a5ed9a3b5efcd9e6.jpg' },
+            { title: 'UI/UX Designer', description: 'Creating intuitive and visually appealing user interfaces', pay: 'Medium', estimatedTime: 'Medium', image: 'https://i.pinimg.com/564x/4a/31/43/4a3143c6227a7cd69b4577e0c45c6d27.jpg' },
+            { title: 'Logo Design', description: 'Designing logos for businesses', pay: 'Medium', estimatedTime: 'Short', image: 'https://i.pinimg.com/564x/c2/78/74/c278746acda71ce922579a0f6950ceb1.jpg' },
+        ];
+
+        function addJobCard(jobListId, jobData) {
+            const jobList = document.getElementById(jobListId);
+            const jobCard = document.createElement('div');
+            jobCard.classList.add('job-card');
+
+            const jobLink = document.createElement('a');
+            jobLink.href = getJobPageLink(jobData.title);
+            jobLink.innerHTML = `
+                <img src="${jobData.image}" alt="${jobData.title} Image">
+                <h4>${jobData.title}</h4>
+                <p>${jobData.description}</p>
+                <p>Pay: ${jobData.pay}</p>
+                <p>Estimated Time: ${jobData.estimatedTime}</p>
+            `;
+            jobCard.appendChild(jobLink);
+
+            jobList.appendChild(jobCard);
+        }
+
+        function clearJobCards(jobListId) {
+            const jobList = document.getElementById(jobListId);
+            jobList.innerHTML = '';
+        }
+
+        function filterJobs() {
+            const selectedJobProfile = document.getElementById('jobProfile').value;
+            const selectedPayGrade = document.getElementById('paygrade').value;
+            const selectedEstimatedTime = document.getElementById('estimatedTime').value;
+
+            clearJobCards('available-job-list');
+
+            const filteredJobs = availableJobsData.filter(job => (
+                (selectedJobProfile === 'all' || job.title === selectedJobProfile) &&
+                (selectedPayGrade === 'all' || job.pay === selectedPayGrade) &&
+                (selectedEstimatedTime === 'all' || job.estimatedTime === selectedEstimatedTime)
+            ));
+
+            filteredJobs.forEach(job => addJobCard('available-job-list', job));
+        }
+
+        function getJobPageLink(title) {
+            const jobTitles = {
+                'Web Development Project': 'jobpg.html',
+                'Graphic Design Task': 'jobpg1.html',
+                'Frontend Developer': 'jobpg2.html',
+                'Backend Developer': 'jobpg3.html',
+                'UI/UX Designer': 'jobpg4.html',
+                'Logo Design': 'jobpg5.html',
+            };
+            return jobTitles[title] || '#'; // Default to # if title not found
+        }
+
+        ongoingJobsData.forEach(job => addJobCard('ongoing-job-list', job));
+        availableJobsData.forEach(job => addJobCard('available-job-list', job));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<html>
+<head>
+  <title>Login</title>
+  <style>
+    body {
+         font-family: 'Roboto', Arial, sans-serif;
+         background: url('https://www.nyk.co.id/wp-content/uploads/2022/07/1-2.jpg') no-repeat center center fixed;
+         
+         background-size: cover;
+         margin: 0;
+         padding: 0;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         height: 100vh;
+         color: #fff;
+     }
+     h1 {
+         margin-top: 0px;
+         padding: 0px;
+         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+         color: #4000ff;
+     }
+
+     .container {
+         background-color: rgba(208, 198, 198, 0.957);
+         padding: 20px;
+         border-radius: 8px;
+         width: 350px;
+         text-align: center;
+         color: black;
+     }
+
+     input, select {
+         width: 100%;
+         padding: 10px;
+         margin: 8px 0;
+         box-sizing: border-box;
+         border: none;
+         border-radius: 25px;
+     }
+
+     textarea {
+         width: 100%;
+         padding: 10px;
+         margin: 8px 0;
+         box-sizing: border-box;
+         resize: vertical;
+     }
+
+     button {
+         width: 100%;
+         padding: 10px;
+         background-color: #ff0000;
+         color: #fff;
+         border: none;
+         border-radius: 25px;
+         cursor: pointer;
+     }
+</style>
+</head>
+<body>
+<div class="container">
+<form id="loginForm">
+  <h1>Log in</h1>
+
+  <label for="loginUsername">Username:</label>
+  <input type="text" id="loginUsername" required>
+
+  <label for="loginPassword">Password:</label>
+  <input type="password" id="loginPassword" required>
+  <button type="button" onclick="login()">Log in</button>
+</form>
+</div>
+<script>
+  function login() {
+
+    const loginUsername = document.getElementById('loginUsername').value;
+    const loginPassword = document.getElementById('loginPassword').value;
+
+    const savedUsername = localStorage.getItem('username');
+    const savedPassword = localStorage.getItem('password');
+    const savedAccountType = localStorage.getItem('accountType');
+
+    if (loginUsername === savedUsername && loginPassword === savedPassword) {
+      alert('Login successful!');
+      if (savedAccountType === 'freelancer') {
+        window.location.href = 'freelancer-dashboard.html';
+      } else if (savedAccountType === 'hire') {
+        window.location.href = 'hire-dashboard.html';
+      }
+    } else {
+      alert('Invalid username or password.');
+    }
+  }
+</script>
+
+</body>
+</html>
